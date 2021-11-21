@@ -37,6 +37,7 @@ router.get('/productoRandom',(req, res)=>{
 //POSTs
 router.post('/',(req,res)=>{
     let producto = req.body;
+    producto.price = parseInt(producto.price);
     console.log(producto);
     contenedor.save(producto).then(result=>{
         res.send(result);

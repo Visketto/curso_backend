@@ -20,13 +20,13 @@
   {
     "id": 4,
     "title": "Libro",
-    "price": "547",
+    "price": 545,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/libro.png"
   },
   {
     "id": 5,
-    "title": "Biblia",
-    "price": "787",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/biblia.png"
+    "title": "Mesa",
+    "price": 1045,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/mesa.png"
   }
 ]

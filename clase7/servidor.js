@@ -14,7 +14,7 @@ server.on('error', (error) => console.log('Error en el servidor: '+(error)));
 const contenedor = new Contenedor('./files/productos.txt');
 const productosRouter = require('./routes/productos');
 
-/*const storage = multer.diskStorage({  
+const storage = multer.diskStorage({  
     destination:function(req,file,cb){ 
         cb(null,'public')
     },
@@ -22,8 +22,9 @@ const productosRouter = require('./routes/productos');
         cb(null,Date.now()+file.originalname);  
     }                                          
 })
-const upload = multer({storage:storage});*/
+const upload = multer({storage:storage});
 
+app.use(upload.single('file'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //app.use('/imagenes',express.static(__dirname+'public'));
@@ -36,9 +37,9 @@ app.get('/', (req, res) => {
 })
 
 /*app.post('/api/uploadfile',upload.single('file'),(req,res)=>{  
-    const files = req.files;
-    if(!files||files.length===0){
+    const file = req.file;
+    if(!file||file.length===0){
         res.status(500).send({message:"No se subió el archivo."})
     }
-    res.send(files);
+    res.send(file);
 })*/
