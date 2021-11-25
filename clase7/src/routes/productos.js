@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import Contenedor from '../classes/Contenedor.js';
+import upload from '../services/upload.js';
 const router = express.Router();
-const Contenedor = require('../classes/contenedor');
-const contenedor = new Contenedor();
+const contenedor = new Contenedor(); 
 
 //GETs
 router.get('/',(req,res)=>{
@@ -12,17 +13,14 @@ router.get('/',(req,res)=>{
     })   
 })
 
-router.get('/:id',(req,res)=>{             //No me está funcionando..
+router.get('/:id',(req,res)=>{
     let id = parseInt(req.params.id);
-    let producto = contenedor.getById(id);
-    if (producto.status === 'success') {
-        res.send(producto);
-    }else{
-        res.send('No se encuentra el producto.')
-    }
-});
+    contenedor.getById(id).then(result=>{
+        res.send(result);
+    })
+})
 
-function getRandom(min,max){               //No me está funcionando..
+function getRandom(min,max){                           //No me está funcionando..
     return Math.floor((Math.random()*(max-min))+min);
 }
 router.get('/productoRandom',(req, res)=>{
@@ -35,10 +33,11 @@ router.get('/productoRandom',(req, res)=>{
 });
 
 //POSTs
-router.post('/',(req,res)=>{
+router.post('/',upload.single('image'),(req,res)=>{
     let producto = req.body;
+    let file = req.file;
     producto.price = parseInt(producto.price);
-    console.log(producto);
+    producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
     contenedor.save(producto).then(result=>{
         res.send(result);
     })
@@ -61,4 +60,4 @@ router.delete('/:id',(req,res)=>{
     })
 })
 
-module.exports = router;
+export default router;

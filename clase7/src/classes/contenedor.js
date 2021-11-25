@@ -1,14 +1,13 @@
-const fs = require('fs');
+import fs from 'fs';
 
 class Contenedor{
-
     constructor (nombre){
         this.nombre = nombre;
     }
     
     async save(producto){
         try{
-            let data = await fs.promises.readFile(`./files/productos`, 'utf-8');
+            let data = await fs.promises.readFile(`./files/productos`,'utf-8');
             let productos = JSON.parse(data);
 
             if(productos.some(prod=>prod.title===producto.title)){
@@ -31,14 +30,12 @@ class Contenedor{
                 }
             }
         }catch{
-            
             let dataProd = {
                 id: 1,
                 title:producto.title,
                 price:producto.price,
                 thumbnail:producto.thumbnail
             }
-
             try{
                 await fs.promises.writeFile(`./files/productos`, JSON.stringify([dataProd],null,2));
                 return {status:"success", message:"Producto creado."}
@@ -50,7 +47,7 @@ class Contenedor{
 
     async getById(id){
         try{
-            let data = await fs.promises.readFile(`./files/productos`, 'utf-8');
+            let data = await fs.promises.readFile(`./files/productos`,'utf-8');
             let productos = JSON.parse(data);
             let producto = productos.find(prod => prod.id == id);
 
@@ -81,7 +78,7 @@ class Contenedor{
 
     async deleteById(id){
         try{
-            let data = await fs.promises.readFile(`./files/productos`, 'utf-8');
+            let data = await fs.promises.readFile(`./files/productos`,'utf-8');
             let productos = JSON.parse(data);
             let productoFiltrado = productos.findIndex(prod => prod.id === id);
 
@@ -103,7 +100,7 @@ class Contenedor{
 
     async deleteAll(){
         try{
-            let data = await fs.promises.readFile(`./files/productos`, 'utf-8');
+            let data = await fs.promises.readFile(`./files/productos`,'utf-8');
             let productos = JSON.parse(data);
             productos = [];
 
@@ -163,9 +160,9 @@ contenedor.save({title: 'Globo Terráqueo', price: 345, thumbnail: 'https://cdn3
     console.log(result.producto, result.message);
 })*/
 
-contenedor.getAll().then(result=>{
+/*contenedor.getAll().then(result=>{
      console.log(result.producto,result.message)
-});
+});*/
 
 /*contenedor.deleteById().then(result=>{
    console.log(result.message);
@@ -175,4 +172,4 @@ contenedor.getAll().then(result=>{
     console.log(result.message);
 });*/
 
-module.exports = Contenedor;
+export default Contenedor;
