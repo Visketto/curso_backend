@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head.ejs') %>   
+</head>
+<body>
+    <main>
+        <div class="mb-4 mt-5">
+            <div style="width:70%;margin:auto">
+                <h2 class="mb-4 mt-5"><%= titulo %></h2>
+                <% if(productos.length>0){ %>
+                <div class="table-responsive mb-3">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Foto</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% productos.forEach(p=>{ %>
+                            <tr>
+                                <td><%= p.title %></td>
+                                <td><%= p.price %></td>
+                                <td><img src='<%= p.thumbnail %>' width="70px"></td>
+                            </tr>                    
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% }else{ %>       
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron productos
+                </div>
+                <% } %>
+
+                <a class="btn btn-primary" href="/" role="button">Ir al formulario</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+- let listaDeProductos = data.length>0
+
+html   
+    include includes/head.pug
+body
+    main
+        div(class="main-container")
+            h2(class="row mb-5")= "Vista de Productos"  
+            if listaDeProductos
+                div(class="table-responsive")
+                    table(class="table table-light")
+                        thead
+                        tr
+                            th(scope="col")= "Nombre"
+                            th(scope="col")= "Precio"
+                            th(scope="col")= "Foto"
+                        tbody
+                            each prod in data
+                                tr
+                                    td= prod.title
+                                    td= prod.price
+                                    td
+                                        img(src=prod.thumbnail alt='Not found' width='60px')
+            else  
+                p(class="alert alert-danger" role="alert")= "No se encontraron productos"
+
+            a(class="btn btn-primary mt-3" href="/" role="button")= "Ir al formulario"
