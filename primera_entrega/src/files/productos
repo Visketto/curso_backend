@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "timestamp": "13:56:27",
+    "title": "Escuadra",
+    "description": "Es una plantilla con forma de triángulo isósceles que se utiliza en dibujo técnico.",
+    "code": "001",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    "price": 123,
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "timestamp": "13:56:28",
+    "title": "Globo Terráqueo",
+    "description": "Es un modelo tridimensional representado sobre una esfera a escala de la Tierra (llamado globo terrestre, terráqueo o geográfico en ese caso) o de otro cuerpo celeste como un planeta o un satélite como la Luna.",
+    "code": "002",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+    "price": 345,
+    "stock": 7
+  },
+  {
+    "id": 3,
+    "timestamp": "13:56:29",
+    "title": "Calculadora",
+    "description": "Es un dispositivo que se utiliza para realizar cálculos aritméticos.",
+    "code": "003",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+    "price": 234,
+    "stock": 3
+  },
+  {
+    "id": 4,
+    "timestamp": "13:56:30",
+    "title": "Libro",
+    "description": "Es una obra impresa, manuscrita o pintada en una serie de hojas de papel, pergamino, vitela u otro material, unidas por un lado y protegidas con tapas.",
+    "code": "004",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-128.png",
+    "price": 545,
+    "stock": 34
+  },
+  {
+    "id": 5,
+    "timestamp": "13:56:31",
+    "title": "Lápiz",
+    "description": "Es un instrumento de escritura o de dibujo consistente en una mina o barrita de pigmento.",
+    "code": "005",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-128.png",
+    "price": 78,
+    "stock": 87
+  },
+  {
+    "id": 6,
+    "timestamp": "13:56:32",
+    "title": "Reloj",
+    "description": "Es un instrumento capaz de medir, mantener e indicar el tiempo en unidades convencionales (horas, minutos o segundos).",
+    "code": "006",
+    "thumbnail": "http://localhost:8080/images/1638146368432image.png",
+    "price": 778,
+    "stock": 2
+  }
+]
