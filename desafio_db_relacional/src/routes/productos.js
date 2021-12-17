@@ -3,26 +3,29 @@ import Contenedor from '../classes/Contenedor.js';
 import upload from '../services/upload.js';
 import {io} from '../servidor.js';
 import { authMiddleware } from "../utils.js";
+import contenedorProductos from '../services/contenedorProductos.js';
+
 const router = express.Router();
 const contenedor = new Contenedor(); 
+const productosService = new contenedorProductos();
 
 //GETs
 router.get('/',(req,res)=>{
-    contenedor.getAll().then(resp =>{
-        res.send(resp);
+    productosService.getProducts().then(result =>{
+        res.send(result);
     }).catch(error =>{
         res.send('Error en el servidor: '+(error));
     })   
 })
 
-router.get('/:id',(req,res)=>{
-    let id = parseInt(req.params.id);
-    contenedor.getById(id).then(result=>{
+router.get('/:pid',(req,res)=>{
+    let id = parseInt(req.params.pid);
+    productosService.getProductById(id).then(result=>{
         res.send(result);
     })
 })
 
-function getRandom(min,max){                           //No me está funcionando..
+/*function getRandom(min,max){                           //No me está funcionando..
     return Math.floor((Math.random()*(max-min))+min);
 }
 router.get('/productoRandom',(req, res)=>{
@@ -32,7 +35,7 @@ router.get('/productoRandom',(req, res)=>{
     }).catch(error =>{
         res.send('Error en el servidor: '+(error));
     })  
-});
+});*/
 
 //POSTs
 router.post('/',authMiddleware,upload.single('image'),(req,res)=>{
@@ -40,11 +43,16 @@ router.post('/',authMiddleware,upload.single('image'),(req,res)=>{
     let file = req.file;
     producto.price = parseInt(producto.price);
     producto.stock = parseInt(producto.stock);                
-    producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
-    contenedor.save(producto).then(result=>{
+    producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file;             //.filename no anda.
+
+    if(!producto.title) return res.send({status:"error",message:"Falta el nombre del producto"});  
+    if(!producto.code) return res.send({status:"error",message:"Falta el código del producto"});   /// VER, si está bien o no estos.
+    if(!producto.price) return res.send({status:"error",message:"Falta el precio del producto"});
+    if(!producto.stock) return res.send({status:"error",message:"Falta el stock del producto"});
+    productosService.registerProduct(producto).then(result=>{
         res.send(result);
         if(result.status==="success"){
-            contenedor.getAll().then(result=>{
+            productosService.getProducts().then(result=>{
                 io.emit('mostrarProductos',result);
             })
         }
@@ -52,18 +60,18 @@ router.post('/',authMiddleware,upload.single('image'),(req,res)=>{
 })
 
 //PUTs
-router.put('/:id',authMiddleware,(req,res)=>{
+router.put('/:pid',authMiddleware,(req,res)=>{                 
     let body = req.body;
-    let id = parseInt(req.params.id);
-    contenedor.updateProduct(id,body).then(result=>{
+    let id = parseInt(req.params.pid);
+    productosService.updateProductById(id,body).then(result=>{
         res.send(result);
     })
 })
 
 //DELETEs
-router.delete('/:id',authMiddleware,(req,res)=>{
-    let id= parseInt(req.params.id);
-    contenedor.deleteById(id).then(result=>{
+router.delete('/:pid',authMiddleware,(req,res)=>{                 
+    let id= parseInt(req.params.pid);     
+    productosService.deleteProductById(id).then(result=>{
         res.send(result)
     })
 })

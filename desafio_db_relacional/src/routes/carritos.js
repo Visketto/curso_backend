@@ -25,7 +25,7 @@ router.post('/',(req,res)=>{
     });
 });
 
-router.post('/:pid/productos/:cid',(req,res)=>{
+router.post('/:cid/productos/:pid',(req,res)=>{
     let prodId = parseInt(req.params.pid);
     let cartId = req.params.cid;
     carrito.addProd(prodId, cartId).then(result=>{

@@ -4,8 +4,8 @@ const admin = true;
 //------------------------- Eventos de socket ---------------------------------//
 
 //Lista de productos
-socket.on('mostrarProductos', data=>{
-    let productos = data;
+socket.on('mostrarProductos',data=>{
+    let productos = data.payload;              //
     console.log(data);
     fetch('templates/productosTabla.handlebars').then(string=>string.text()).then(template=>{
         const plantillaProcesada = Handlebars.compile(template);
@@ -18,39 +18,16 @@ socket.on('mostrarProductos', data=>{
     })
 })
 
-//Centro de mensajes
-let emailChat = document.getElementById('emailChat');
-let msjChat= document.getElementById('msjChat');
-let chatButton= document.getElementById('chatButton');
-
-function validarEmail(email){
-    let regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email) ? true : false;
-}
-
-chatButton.addEventListener('click',(e)=>{   
-    e.preventDefault();
-    if(emailChat.value===''){
-        return alert('Ingresá un mail, por favor');
-    }
-    else if(validarEmail(emailChat.value)!= true){
-        return alert('Ingresá el mail nuevamente');
-    }
-    else if(msjChat.value.trim()===''){
-        return alert('Escribí un mensaje, por favor');
-    }
-    else{
-        socket.emit('message',{emailChat:emailChat.value, message:msjChat.value});
-    } 
+//Centro de mensajes    
+socket.on("mensajes",(data) =>{
+    let p = document.querySelector("#mensajes");
+    console.log("Mensajes:",data);
+    let mensajes = data.map((message) =>{
+        return `<div><span><span>${message.username}</span> <span>[ ${message.created_at} ]</span> dice: <span>${message.message}</span></span></div>`;
+        })
+        .join("");
+    p.innerHTML = mensajes;
 });
-
-socket.on('messagelog',data=>{
-    let mensajesContenedor= document.getElementById('mensajes');
-    let mensajes=data.map(m=>{
-        return `<div><span><b>${m.message.emailChat}</b> [${m.time}]: ${m.message.message}</span></div>`
-    }).join('');
-    mensajesContenedor.innerHTML=mensajes;
-})
 
 //Envío de formulario para registrar producto
 document.addEventListener('submit',enviarFormulario);

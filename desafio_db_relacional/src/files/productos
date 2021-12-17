@@ -20,16 +20,6 @@
     "stock": 7
   },
   {
-    "id": 3,
-    "timestamp": "13:56:29",
-    "title": "Calculadora",
-    "description": "Es un dispositivo que se utiliza para realizar cálculos aritméticos.",
-    "code": "003",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-    "price": 234,
-    "stock": 3
-  },
-  {
     "id": 4,
     "timestamp": "13:56:30",
     "title": "Libro",

@@ -7,21 +7,32 @@
   {
     "id": "twPryMh",
     "date": "9/12/2021 20:44:52",
-    "products": []
+    "products": [
+      {
+        "id": 5,
+        "timestamp": "13:56:31",
+        "title": "Lápiz",
+        "description": "Es un instrumento de escritura o de dibujo consistente en una mina o barrita de pigmento.",
+        "code": "005",
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-128.png",
+        "price": 78,
+        "stock": 87
+      }
+    ]
   },
   {
     "id": "X09L6DO",
     "date": "9/12/2021 20:44:51",
     "products": [
       {
-        "id": 1,
-        "timestamp": "13:56:27",
-        "title": "Escuadra",
-        "description": "Es una plantilla con forma de triángulo isósceles que se utiliza en dibujo técnico.",
-        "code": "001",
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-        "price": 123,
-        "stock": 10
+        "id": 5,
+        "timestamp": "13:56:31",
+        "title": "Lápiz",
+        "description": "Es un instrumento de escritura o de dibujo consistente en una mina o barrita de pigmento.",
+        "code": "005",
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-128.png",
+        "price": 78,
+        "stock": 87
       }
     ]
   }
