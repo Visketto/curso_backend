@@ -98,29 +98,46 @@ io.on('connection', async socket=>{
 })
 
 //Centro de mensajes
-let chatMensajes = await chatService.getAllMessages();
+let messages = [];
 
-io.on("connection", (socket) =>{
-  socket.emit("mensajes", chatMensajes.payload);
-  socket.on("message", async(data) =>{
-    chatService.saveMessage(data);
-    io.emit("mensajes", chatMensajes.payload);
-  });
+io.on("connection",async socket =>{
+    socket.emit("messagelog",messages);
+    socket.on("message",data =>{
+        chatService.saveMessage(data)
+        .then(result => console.log(result))
+        .then(() =>{
+            chatService.getAllMessages().then(result =>{
+            if(result.status === "success"){
+                io.emit("message",result.payload)
+            }
+            });
+        });
+        messages.push(data);
+        io.emit("messagelog",messages)
+    });
 });
 
 app.post("/api/mensajes",(req,res) =>{
-  const mensaje = req.body;
-  chatService.saveMessage(mensaje).then((result) =>{
-    res.send(result);
-  });
-});
-app.get("/api/mensajes",(req,res) =>{
-  chatService.getAllMessages().then((result) =>{
-    res.send(result);
-  });
+    const mensaje = req.body;
+    chatService.saveMessage(mensaje).then((result) =>{
+      res.send(result);
+    });
 });
 
-//Error ruta
+app.get("/api/mensajes",(req,res) =>{
+    chatService.getAllMessages().then((result) =>{
+      res.send(result);
+    });
+});
+
+app.delete('/api/mensajes/:mid',(req,res)=>{                 
+    let id= parseInt(req.params.mid);     
+    chatService.deleteMessageById(id).then(result=>{
+        res.send(result)
+    });
+});
+
+//-----------------------------------Error ruta--------------------------------------------//
 app.use(function(req,res){
     res.status(404).send({ error : -2, descripcion: 'Ruta no encontrada'});
 });

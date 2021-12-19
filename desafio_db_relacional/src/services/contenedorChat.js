@@ -1,48 +1,57 @@
-import { database } from "../config.js";
+import {database} from "../config.js";
 
 export default class contenedorChat{
     constructor(){
-        database.schema.hasTable("mensajes").then((result) =>{
-        if (!result){
-            database.schema.createTable("mensajes",(table) =>{
-                table.increments();
-                table.timestamps(true,true);
-                table.string("username").notNullable();
-                table.string("message").notNullable();
-            })
-            .then((result) =>{
-                console.log("La tabla de mensajes ha sido creada");
-            });
-        };
-    });
-};
+        database.schema.hasTable("chat").then(result =>{
+            if(!result){
+                database.schema.createTable("chat",table =>{
+                    table.increments(),
+                    table.timestamps(true, true),
+                    table.string("email").notNullable(),
+                    table.string("message").notNullable()
+                }).then(result =>{
+                    console.log("Tabla de chats creada");
+                }).catch(error =>{
+                    return{status:"error",message:"Error al crear la tabla de chats"+error}
+                });
+            };
+        });
+    };
 
-    saveMessage = async(msj) =>{
+    async getAllMessages(){
         try{
-            const mensaje = await database.table("mensajes").insert(msj);
-            console.log(mensaje);
-            return{
-                status:"success",
-                mensaje:"Mensaje registrado",
-                payload:mensaje
-            };
+            let chat = await database.select().table("chat");
+            return{status:"success",payload:chat}
         }catch(error){
-            return{
-                status:"Error",
-                mensaje:"El mensaje no se pudo registrar"+error
-            };
+            return{status:"error",message:"Error al obtener los mensajes del chat"+error}
         };
     };
 
-    getAllMessages = async() =>{
+    async saveMessage(message){
         try{
-            const mensajes = await database.select().table("mensajes");
-            return{status:"success",payload:mensajes};
+            let chat = await database.select().table("chat");
+            if(!chat){
+                return{status:"error",message:"Error con el chat"}
+            }else{
+                await database.select().table("chat").insert(message);
+                return{status:"success",payload: message}
+            }
         }catch(error){
-            return {
-                status:"Error",
-                message:"No se encontraron mensajes"+error
-            };
+            return{status:"error",message:"Error al guardar mensaje"+error}
+        };
+    };
+
+    async deleteMessageById(id){
+        try {
+            let chat = await database.select().table("chat").where("id",id).first();
+            if (chat){
+                await database("chat").del().where("id",id);
+                return {status:"success",message:"El mensaje de chat se ha eliminado"}
+            }else{
+                return {status:"error",message:"No se pudo eliminar el mensaje"}
+            }
+        }catch(error){
+            return {status:"error", message:"Error al eliminar el mensaje"+error}
         };
     };
 };

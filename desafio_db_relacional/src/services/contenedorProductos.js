@@ -20,7 +20,7 @@ export default class contenedorProductos{
         });
     };
 
-    getProducts = async ()=>{
+    async getProducts(){
         try{
             let productos = await database.select().table('productos');
             return {status:"success",payload:productos}
@@ -29,7 +29,7 @@ export default class contenedorProductos{
         };
     };
 
-    getProductById = async (id)=>{
+    async getProductById(id){
         try{
             let producto = await database.select().table('productos').where('id',id).first();
             if(producto){
@@ -42,7 +42,7 @@ export default class contenedorProductos{
         };
     };
 
-    registerProduct = async (producto) =>{
+    async registerProduct(producto){
         try{
             let exists = await database.table('productos').select().where('title',producto.title).first();
             if(exists) return {status:"error",message:"El producto ya existe"}
@@ -54,7 +54,7 @@ export default class contenedorProductos{
         };
     };
 
-    updateProductById = async (id,body) =>{                              
+    async updateProductById(id,body){                              
         try {
             let productoActualizado = await database.update(body).table('productos').where('id', id);
             if(productoActualizado){ 
@@ -67,7 +67,7 @@ export default class contenedorProductos{
           };
     };
 
-    deleteProductById = async (id) =>{
+    async deleteProductById(id){
         try {
             let producto = await database.select().table('productos').where('id',id).first();
             if (producto){

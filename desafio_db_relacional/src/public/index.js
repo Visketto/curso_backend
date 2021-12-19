@@ -19,13 +19,38 @@ socket.on('mostrarProductos',data=>{
 })
 
 //Centro de mensajes    
-socket.on("mensajes",(data) =>{
-    let p = document.querySelector("#mensajes");
+let msj = document.getElementById("msjChat");
+let email = document.getElementById("emailChat");
+let chatButton = document.getElementById("chatButton");
+
+function validarEmail(email){
+    let regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email) ? true : false;
+};
+
+chatButton.addEventListener('click',(e)=>{   
+    e.preventDefault();
+    if(email.value===''){
+        return alert('Ingresá un mail, por favor');
+    }
+    else if(validarEmail(email.value)!= true){
+        return alert('Ingresá el mail nuevamente');
+    }
+    else if(msj.value.trim()===''){
+        return alert('Escribí un mensaje, por favor');
+    }
+    else{
+        socket.emit('message',{email:email.value, message:msj.value});
+    } 
+});
+
+socket.on("messagelog",data =>{
+    let p = document.getElementById("mensajes");
+    let date = new Date();
     console.log("Mensajes:",data);
-    let mensajes = data.map((message) =>{
-        return `<div><span><span>${message.username}</span> <span>[ ${message.created_at} ]</span> dice: <span>${message.message}</span></span></div>`;
-        })
-        .join("");
+    let mensajes = data.map(message =>{
+        return `<div><span>${message.email}</span> <span>[${date.toLocaleString()}] dice</span><span>: ${message.message}</span></div>`
+    }).join("");
     p.innerHTML = mensajes;
 });
 
@@ -76,4 +101,4 @@ document.getElementById("image").onchange = (e)=>{
         document.getElementById("preview").src = e.target.result;
     }
     read.readAsDataURL(e.target.files[0])
-}
+};
