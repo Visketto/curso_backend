@@ -1,0 +1,125 @@
+use ecommerce
+db.createCollection('messages')
+db.createCollection('products')
+
+db.messages.insertMany([{"email":"jose@mail.com","message":"Hola!"},{"email":"maria@mail.com","message":"Hola!"},{"email":"matias@mail.com","message":"Hola!"},{"email":"michael@mail.com","message":"Hello!"},{"email":"kate@mail.com","message":"Hello!"},{"email":"josh@mail.com","message":"Hello!"},{"email":"susumu@mail.com","message":"Konnichiwa!"},{"email":"yoshiko@mail.com","message":"Konnichiwa!"},{"email":"kaoru@mail.com","message":"Konnichiwa!"},{"email":"vivi@mail.com","message":"Holis!"}])
+
+db.products.insertMany([
+  {
+    "name":"Calculadora",
+    "description":"Es un dispositivo que se utiliza para realizar cálculos aritméticos.",
+    "price":500,
+    "thumbnail":"https://www.iconfinder.com/icons/2824440/calculator_math_school_tool_icon",
+    "code":"001",
+    "stock":30
+  },
+  {
+    "name":"Lápiz",
+    "description":"Es un instrumento de escritura o de dibujo consistente en una mina o barrita de pigmento (generalmente de grafito y una grasa o arcilla especial.",
+    "price":110,
+    "thumbnail":"https://www.iconfinder.com/icons/2824443/pen_pencil_school_stationery_icon",
+    "code":"002",
+    "stock":77
+  },
+  {
+    "name":"Globo terráqueo",
+    "description":"Es un modelo tridimensional representado sobre una esfera a escala de la Tierra",
+    "price":3400,
+    "thumbnail":"https://www.iconfinder.com/icons/2824444/earth_geograhy_globe_planet_school_icon",
+    "code":"003",
+    "stock":10
+  },
+  {
+    "name":"Despertador",
+    "description":"Es un dispositivo que se utiliza para despertarse mediante un sonido o una luz, a una hora y/o día determinados.",
+    "price":2650,
+    "thumbnail":"https://www.iconfinder.com/icons/2824441/clock_stopwatch_time_timer_icon",
+    "code":"004",
+    "stock":22
+  },
+  {
+    "name":"Paleta",
+    "description":"Es una superficie rígida, plana en la que un pintor arregla y mezcla las pinturas.",
+    "price":1000,
+    "thumbnail":"https://www.iconfinder.com/icons/2824445/academy_brush_color_paint_pallete_icon",
+    "code":"005",
+    "stock":43
+  },
+  {
+    "name":"Microscopio",
+    "description":"Es una herramienta que permite observar objetos, que son demasiado pequeños para ser observados a simple vista.",
+    "price":4490,
+    "thumbnail":"https://www.iconfinder.com/icons/2824435/lab_microscope_school_science_icon",
+    "code":"006",
+    "stock":11
+  },
+  {
+    "name":"Birrete",
+    "description":"Es un gorro rematado con una borla, usado en actos ceremoniales, por magistrados, jueces, letrados, abogados y componentes de la comunidad universitaria en ocasiones solemnes.",
+    "price":2950,
+    "thumbnail":"https://www.iconfinder.com/icons/2824450/academic_cap_graduation_school_square_icon",
+    "code":"007",
+    "stock":20
+  },
+  {
+    "name":"Enciclopedia",
+    "description":"Es una obra de referencia que busca compendiar y recopilar el conocimiento humano.",
+    "price":3200,
+    "thumbnail":"https://www.iconfinder.com/icons/2824439/book_note_paper_school_icon",
+    "code":"008",
+    "stock":33
+  },
+  {
+    "name":"Pizarrón",
+    "description":"Es una superficie de escritura reutilizable en la cual los textos y las figuras se dibujan con tiza u otro tipo de rotuladores borrables.",
+    "price":1800,
+    "thumbnail":"https://www.iconfinder.com/icons/2824448/board_class_math_school_icon",
+    "code":"009",
+    "stock":6
+  },
+  {
+    "name":"Mochila",
+    "description":"Es un recipiente para llevar el equipaje, por lo general sujeto a la espalda por medio de correas o bandas que pasan por los hombros y se atan a la cintura.",
+    "price":770,
+    "thumbnail":"https://www.iconfinder.com/icons/2824442/bag_container_pack_school_icon",
+    "code":"010",
+    "stock":28
+  }
+])
+
+db.messages.find().pretty()
+db.products.find().pretty()
+
+db.messages.countDocuments({})
+db.products.countDocuments({})
+
+//------------------------------- CRUD -------------------------------------//
+
+//Agregar un producto más en la colección de productos:
+db.products.insertOne({name:"Escuadra",description:"Es una plantilla con forma de triángulo isósceles que se utiliza en dibujo técnico.",price:310,thumbnail:"https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",codigo:"011",stock:41})
+
+//Listar los productos con precio menor a 1000 pesos:
+db.products.find({price:{$lt:1000}}).pretty()
+
+//Listar los productos con precio entre los 1000 a 3000 pesos:
+db.products.find({$and:[{price:{$gt:1000}},{price:{$lt:3000}}]}).pretty();
+
+//Listar los productos con precio mayor a 3000 pesos:
+db.products.find({price:{$gt:3000}}).pretty()
+
+//Realizar una consulta que traiga sólo el nombre del tercer producto más barato:
+db.products.find({},{name:1}).sort({price:1}).skip(2).limit(1)
+
+//Hacer una actualización sobre todos los productos, agregando el campo stock a todos ellos con un valor de 100:
+db.products.updateMany({},{$set:{stock:100}})
+
+//Cambiar el stock a 0 de los productos con precios mayores a 4000 pesos:
+db.products.updateMany({price:{$gt:4000}},{$set:{stock:0}})
+
+//Borrar los productos con precio menor a 1000 pesos:
+db.products.deleteMany({price:{$lt:1000}})
+
+
+//-------------------------------- USUARIO -------------------------------------------//
+
+db.createUser({user:"pepe",pwd:"asd456",roles:[{role:"read",db:"ecommerce"}]})
