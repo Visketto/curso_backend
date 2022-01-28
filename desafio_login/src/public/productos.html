@@ -11,6 +11,59 @@
     <title>Desafío Login</title>
 </head>
 <body>
+    <main>
+        <div class="form-container">
+            <h2 class="mb-4 mt-5">Ingrese producto</h2>
+            <form action="/api/productos" method="POST" id="prodForm" name="prodForm">
+                <div class="form-floating form-input">
+                    <input class="form-control" name="title" id="title" placeholder="title" required>
+                    <label for="title">Nombre</label>
+                </div>
+                <div class="form-floating form-input">
+                    <input class="form-control" name="description" id="description" placeholder="description" required>
+                    <label for="description">Descripción</label>
+                </div>
+                <div class="form-floating form-input">
+                    <input class="form-control" name="code" id="code" placeholder="code" required>
+                    <label for="code">Código</label>
+                </div>
+                <div class="form-floating form-input">
+                    <input class="form-control" name="price" id="price" placeholder="price" required>
+                    <label for="price">Precio</label>
+                </div>
+                <div class="form-floating form-input">
+                    <input class="form-control" type="file" accept="image/*" name="image" id="image" required>
+                    <label for="image">Foto</label>
+                </div>
+                <div class="form-floating form-input">
+                    <input class="form-control" name="stock" id="stock" placeholder="stock" required>
+                    <label for="stock">Stock</label>
+                </div>
+
+                <div style="display:flex">
+                    <div>
+                        <img id="preview">
+                    </div>
+                    <div style="width:100%; padding-top:100px">
+                        <p class="image-text"></p>
+                    </div>
+                </div>
+
+                <div style="margin-top:30px; display:flex; justify-content: center;">
+                    <button type="submit" class="btn btn-success me-3">Aceptar</button> 
+                    <button type="button" onclick="location.href='/view/productos'" class="btn btn-primary">Ver productos</button> 
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div class="main-container bg-light mb-5">
+        <h2 class="mb-4">Lista de productos</h2>
+        <div>
+            <div id="productosTabla"></div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row d-flex flex-column min-vh-100 justify-content-center align-items-center">
           <div class="col-sm-12 col-md-4 p-5 shadow rounded" style="background-color: #c8b7e9; ">
