@@ -1,0 +1,29 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="container d-flex mb-4 d-flex justify-content-between">
+      <div id="username"></div>
+      <button id="logout" class="btn btn-primary">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="main-container mb-5 bg-warning bg-opacity-10">
+    <div class="row">
+      <div>
+        <div class="text-center mt-4 mb-5">
+          <h2>Centro de mensajes</h2>
+        </div>
+
+        <div class="mt-3">
+          <input type="text" class="form-control" id="message" name="message" arial-label="Message" placeholder="Escribe tu mensaje">
+        </div>
+      </div>
+      <hr class="mt-5">
+
+      <div>
+        <div class="mt-4" id="chats"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/chat.js"></script>

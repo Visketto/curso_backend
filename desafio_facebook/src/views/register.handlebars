@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="col-sm-12 col-md-6 p-5">
+      <h1 class="text-center">Registrarse</h1>
+      
+      <form id="registerForm">
+        <div class="mt-4">
+          <div>
+            <label for="firstName" class="form-label"></label>
+            <input type="text" class="form-control" placeholder="Nombre" id="firstName" name="firstName" aria-label="First name">
+          </div>
+          <div>
+            <label for="lastName" class="form-label"></label>
+            <input type="text" class="form-control" placeholder="Apellido" id="lastName" name="lastName" aria-label="Last name">
+          </div>
+        </div>
+        <div>
+        <div>
+          <div>
+            <label for="email" class="form-label"></label>
+            <input type="text" class="form-control" placeholder="Email" id="email" name="email" aria-label="Email">
+          </div>
+          <div>
+            <label for="age" class="form-label"></label>
+            <input type="number" class="form-control" placeholder="Edad" id="age" name="age" aria-label="Age">
+          </div>
+        </div>
+        <div>
+            <label for="username" class="form-label"></label>
+            <input type="text" class="form-control" placeholder="Usuario" id="username" name="username" aria-label="Username">
+          </div>
+          <div>
+            <label for="password" class="form-label"></label>
+            <input type="password" class="form-control" placeholder="Contraseña" id="password" name="password" aria-label="Password">
+          </div>
+        </div>
+        <div>
+          <div>
+            <label for="avatar" class="form-label"></label>
+            <input type="file" class="form-control" accept=".jpg,.png,.jpeg" id="avatar" name="avatar" aria-label="Avatar">
+          </div>
+        </div>
+
+        <div class="mt-5" style="display:flex; justify-content:space-between; align-items:center;">
+          <a href='/'>Iniciar sesión</a>
+          <button type="submit" class="btn btn-primary">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="js/register.js"></script>
